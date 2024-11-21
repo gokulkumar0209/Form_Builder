@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
+
 interface Field {
 	id: string;
 	type: string;
@@ -50,12 +51,12 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 	}, [jsonContent]);
 
 	return (
-		<div className="w-full md:w-[60%] p-8 bg-gray-800 rounded-lg shadow-lg space-y-6">
+		<div className="w-full max-w-3xl p-6 bg-gray-800 rounded-lg shadow-lg space-y-6 mx-auto overflow-y-auto max-h-screen">
 			{error && (
 				<div className="text-red-500 text-lg font-semibold mb-4">{error}</div>
 			)}
 
-			<div className="mb-4">
+			<div className="mb-6">
 				{formObject?.formTitle ? (
 					<h1 className="text-3xl font-semibold text-white">
 						{formObject.formTitle}
@@ -81,10 +82,10 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 				{formObject?.fields?.map((field) => (
-					<div key={field.id} className="mb-4">
+					<div key={field.id} className="mb-6">
 						<label
 							htmlFor={field.id}
-							className="block text-gray-300 text-lg font-medium mb-2"
+							className="block text-lg font-medium text-gray-300 mb-2"
 						>
 							{field.label}
 						</label>
@@ -105,7 +106,7 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 												{...controllerField}
 												type={field.type}
 												id={field.id}
-												className="w-full p-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+												className="w-full p-4 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 												placeholder={field.placeholder}
 											/>
 										);
@@ -114,7 +115,7 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 											<select
 												{...controllerField}
 												id={field.id}
-												className="w-full p-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+												className="w-full p-4 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 											>
 												{field.placeholder && (
 													<option value="">{field.placeholder}</option>
@@ -167,7 +168,7 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 											<textarea
 												{...controllerField}
 												id={field.id}
-												className="w-full p-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+												className="w-full p-4 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 												placeholder={field.placeholder}
 											/>
 										);
@@ -177,7 +178,7 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 												{...controllerField}
 												type="file"
 												id={field.id}
-												className="w-full p-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+												className="w-full p-4 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 											/>
 										);
 									default:
@@ -193,9 +194,11 @@ const FormPreview: React.FC<FormPreviewProps> = ({ jsonContent }) => {
 					</div>
 				))}
 
+			
+
 				<button
 					type="submit"
-					className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					className="w-full bg-blue-500 text-white py-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
 				>
 					Submit
 				</button>
