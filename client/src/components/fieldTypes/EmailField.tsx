@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-interface ValidationObject {
-	pattern?: RegExp;
-	message?: string;
-}
+// interface ValidationObject {
+// 	pattern?: RegExp;
+// 	message?: string;
+// }
 
 interface EmailObject {
 	label?: string;
 	required?: boolean;
 	placeholder?: string;
-	validation?: ValidationObject;
+	validation?: any;
 }
 
 interface EmailProps {
@@ -17,24 +17,23 @@ interface EmailProps {
 }
 
 const EmailField: React.FC<EmailProps> = ({ field }) => {
-	const [email, setEmail] = useState<string>(""); // Email state
-	const [message, setMessage] = useState<string>(""); // Validation message state
+	const [email, setEmail] = useState<string>("");
+	const [message, setMessage] = useState<string>("");
 
 	useEffect(() => {
 		const validateEmail = () => {
-			const emailRegex =
-				 /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 			if (email && emailRegex && !emailRegex.test(email)) {
 				setMessage(
 					field.validation?.message || "Please enter a valid email address."
 				);
 			} else {
-				setMessage(""); // Clear message if valid
+				setMessage("");
 			}
 		};
 
-		const timer = setTimeout(validateEmail, 500); // Debounce for 500ms
-		return () => clearTimeout(timer); // Cleanup
+		const timer = setTimeout(validateEmail, 1000);
+		return () => clearTimeout(timer);
 	}, [email, field.validation]);
 
 	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +49,7 @@ const EmailField: React.FC<EmailProps> = ({ field }) => {
 				required={field.required}
 				placeholder={field.placeholder}
 				onChange={handleEmailChange}
-				value={email} // Controlled input
+				value={email}
 			/>
 			{message && (
 				<p role="alert" style={{ color: "red" }}>
