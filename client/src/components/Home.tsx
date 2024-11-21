@@ -1,13 +1,17 @@
-import  { useState } from "react";
-import Input from "./Input";
-import Preview from "./Preview";
+import { useState } from "react";
+import JsonInputField from "./JsonInputField";
+import FormPreview from "./FormPreview";
 
 function Home() {
-	const [jsonContent, setJsonContent]=useState("")
+	const [jsonContent, setJsonContent] = useState<string>("");
+
 	return (
-		<div className="w-[100vw] flex">
-			<Input jsonContent={jsonContent}   setJsonContent={setJsonContent} />
-			<Preview  jsonContent={jsonContent} />
+		<div className="w-full h-screen flex-col justify-center items-center p-4 space-x-8">
+			<JsonInputField
+				jsonContent={jsonContent}
+				setJsonContent={setJsonContent}
+			/>
+			<FormPreview jsonContent={jsonContent} />
 		</div>
 	);
 }

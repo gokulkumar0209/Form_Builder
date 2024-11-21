@@ -10,11 +10,12 @@ const JsonInputField: React.FC<JsonInputProps> = ({
 	setJsonContent,
 }) => {
 	return (
-		<div className="w-full">
+		<div className="w-full max-w-4xl p-6">
 			<textarea
-				className="bg-yellow-300 w-full flex-row h-96 p-4 break-words"
-				value={jsonContent} // Ensure the textarea value is controlled by jsonContent
+				className="bg-gray-800 text-white border-2 border-gray-600 rounded-lg w-full h-96 p-4  placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				value={jsonContent}
 				onChange={(e) => setJsonContent(e.target.value)}
+				placeholder="Enter your JSON content here"
 			/>
 		</div>
 	);

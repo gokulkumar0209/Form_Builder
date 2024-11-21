@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-// interface ValidationObject {
-// 	pattern?: RegExp;
-// 	message?: string;
-// }
-
 interface EmailObject {
 	label?: string;
 	required?: boolean;
 	placeholder?: string;
-	validation?: any;
+	validation?: { message?: string };
 }
 
 interface EmailProps {
@@ -23,7 +18,7 @@ const EmailField: React.FC<EmailProps> = ({ field }) => {
 	useEffect(() => {
 		const validateEmail = () => {
 			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (email && emailRegex && !emailRegex.test(email)) {
+			if (email && !emailRegex.test(email)) {
 				setMessage(
 					field.validation?.message || "Please enter a valid email address."
 				);
@@ -32,7 +27,7 @@ const EmailField: React.FC<EmailProps> = ({ field }) => {
 			}
 		};
 
-		const timer = setTimeout(validateEmail, 1000);
+		const timer = setTimeout(validateEmail, 1000); // Debounce validation
 		return () => clearTimeout(timer);
 	}, [email, field.validation]);
 
@@ -41,8 +36,12 @@ const EmailField: React.FC<EmailProps> = ({ field }) => {
 	};
 
 	return (
-		<div>
-			{field.label && <label htmlFor="email">{field.label}</label>}
+		<div className="flex flex-col space-y-2 mb-4">
+			{field.label && (
+				<label htmlFor="email" className="text-gray-700 font-medium">
+					{field.label}
+				</label>
+			)}
 			<input
 				id="email"
 				type="email"
@@ -50,9 +49,10 @@ const EmailField: React.FC<EmailProps> = ({ field }) => {
 				placeholder={field.placeholder}
 				onChange={handleEmailChange}
 				value={email}
+				className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			/>
 			{message && (
-				<p role="alert" style={{ color: "red" }}>
+				<p role="alert" className="text-red-500 text-sm">
 					{message}
 				</p>
 			)}

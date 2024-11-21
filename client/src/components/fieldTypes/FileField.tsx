@@ -3,32 +3,38 @@ import React from "react";
 interface FileObject {
 	label?: string;
 	required?: boolean;
-	placeholder?: string;
 	accept?: Array<string>;
 }
 
-interface FieldFieldProps {
+interface FileFieldProps {
 	field: FileObject;
 }
 
-const FileField: React.FC<FieldFieldProps> = ({ field }) => {
-	// let field = {
-	// 	id: "resume",
-	// 	type: "file",
-	// 	label: "Upload Resume",
-	// 	required: true,
-	// 	placeholder: "Upload your resume in PDF format",
-	// 	accept: [".pdf", ".doc", ".docx"],
-	// };
+const FileField: React.FC<FileFieldProps> = ({ field }) => {
+	// Ensure 'accept' is always an array before calling .join() on it
+	const acceptTypes = Array.isArray(field.accept)
+		? field.accept.join(", ")
+		: undefined;
+
 	return (
-		<div>
-			<label htmlFor="">{field.label}</label>
+		<div className="flex flex-col space-y-2 mb-4">
+			{field.label && (
+				<label htmlFor="file-input" className="text-gray-700 font-medium">
+					{field.label}
+				</label>
+			)}
 			<input
+				id="file-input"
 				type="file"
-				accept={field.accept?.join(", ")}
+				accept={acceptTypes}
 				required={field.required}
-				placeholder={field.placeholder}
+				className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			/>
+			<p className="text-xs text-gray-500">
+				{acceptTypes
+					? `Allowed file types: ${acceptTypes}`
+					: "No file type restrictions."}
+			</p>
 		</div>
 	);
 };
